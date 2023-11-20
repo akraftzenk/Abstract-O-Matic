@@ -11,5 +11,8 @@
       "48": "img/icon48.png"
     }
   },
-  "manifest_version": 2
+  "manifest_version": 2,
+  "background":{
+    "scripts": ["test.js"]
+  }
 }
