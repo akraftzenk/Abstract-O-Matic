@@ -1,22 +1,22 @@
 function onCreated() {
     if (browser.runtime.lastError) {
-        alert(`Error: ${browser.runtime.lastError}`);
+        console.log(`Error: ${browser.runtime.lastError}`);
     } else {
-        alert("Item created successfully");
+        console.log("Item created successfully");
     }
 }
 
-browser.menus.create({
+browser.contextMenus.create({
     id: "summarize",
     title: "Summarize Article",
     },
     onCreated,
 );
 
-browser.menus.onClicked.addListener((info, tab) => {
+browser.contextMenus.onClicked.addListener((info, tab) => {
     switch (info.menuItemId) {
         case "summarize":
-            alert("summarize selected");
+            console.log("summarize selected");
             break;
     }
 });
