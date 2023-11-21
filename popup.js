@@ -1,7 +1,7 @@
 window.onload = () => {
 
-    helpButton = document.getElementById("helpButton");
-    helpDiv = document.getElementById("helpDiv");
+    const helpButton = document.getElementById("helpButton");
+    const helpDiv = document.getElementById("helpDiv");
 
     helpButton.onclick = help;
 
