@@ -2,7 +2,7 @@
   "name": "Extension Demo",
   "version": "1.0",
   "description": "Build an Basic Extension!",
-  "permissions": ["activeTab", "contextMenus", "menus"],
+  "permissions": ["activeTab", "contextMenus", "menus", "scripting"],
   "browser_action": {
     "default_popup": "popup.html",
     "default_icon": {

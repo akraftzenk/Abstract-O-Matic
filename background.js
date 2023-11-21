@@ -20,3 +20,5 @@ browser.menus.onClicked.addListener((info, tab) => {
             break;
     }
 });
+
+
