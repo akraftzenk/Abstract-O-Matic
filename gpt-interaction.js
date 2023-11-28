@@ -1,5 +1,4 @@
 let GPT_URL = "https://api.openai.com/v1/chat/completions";
-let GPT_AUTHORIZATION_TOKEN = "";
 
 /**
  * interacts with chat gpt
@@ -7,10 +6,16 @@ let GPT_AUTHORIZATION_TOKEN = "";
  * @returns {Promise<*>}
  */
 async function gpt_interaction(request) {
+    let value = await browser.storage.local.get("gptKey");
+
+    if (typeof value === 'undefined' && typeof value.gptKey === 'undefined'){
+        throw new Error("There is no GPT-Key!");
+    }
+
     let response = await fetch(GPT_URL, {
         method: 'POST',
         headers: {
-            'Authorization': 'Bearer ' + GPT_AUTHORIZATION_TOKEN,
+            'Authorization': 'Bearer ' + value.gptKey,
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
