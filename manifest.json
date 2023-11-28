@@ -1,7 +1,7 @@
 {
-  "name": "Extension Demo",
+  "name": "Abstract-O-Matic",
   "version": "1.0",
-  "description": "Build an Basic Extension!",
+  "description": "Summarize Scientific Articles",
   "permissions": ["activeTab", "contextMenus", "menus", "scripting"],
   "browser_action": {
     "default_popup": "popup.html",
