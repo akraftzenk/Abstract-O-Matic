@@ -12,10 +12,14 @@ chrome.contextMenus.create({
     },
     onCreated,
 );
+
 chrome.contextMenus.onClicked.addListener((info, tab) => {
     switch (info.menuItemId) {
         case "summarize":
-            console.log("summarize selected");
+            chrome.tabs.executeScript({
+                //code: `alert("summarize selected");`,
+                file: `testAlert.js`,
+            });
             break;
     }
 });
