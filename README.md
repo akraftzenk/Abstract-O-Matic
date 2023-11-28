@@ -10,3 +10,6 @@ Chrome:
 Firefox:
 
 Type "about:addons" into your browser. 
+Click the settings icon in the top right and select "Debug Add-ons"
+Click on Load Temporary Add-on
+Select the manifest.json file
