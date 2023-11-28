@@ -1,22 +1,25 @@
 function onCreated() {
-    if (browser.runtime.lastError) {
-        console.log(`Error: ${browser.runtime.lastError}`);
+    if (chrome.runtime.lastError) {
+        console.log(`Error: ${chrome.runtime.lastError}`);
     } else {
         console.log("Item created successfully");
     }
 }
 
-browser.contextMenus.create({
+chrome.contextMenus.create({
     id: "summarize",
     title: "Summarize Article",
     },
     onCreated,
 );
 
-browser.contextMenus.onClicked.addListener((info, tab) => {
+chrome.contextMenus.onClicked.addListener((info, tab) => {
     switch (info.menuItemId) {
         case "summarize":
-            console.log("summarize selected");
+            chrome.tabs.executeScript({
+                //code: `alert("summarize selected");`,
+                file: `testAlert.js`,
+            });
             break;
     }
 });

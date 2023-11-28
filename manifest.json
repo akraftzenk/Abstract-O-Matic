@@ -1,16 +1,12 @@
 {
-  "name": "Extension Demo",
+  "name": "Abstract-O-Matic",
   "version": "1.0",
-  "description": "Build an Basic Extension!",
-  "permissions": ["activeTab", "contextMenus", "menus", "scripting", "storage"],
+  "description": "Summarize Scientific Articles",
+  "permissions": ["activeTab", "contextMenus", "menus", "scripting"],
   "browser_action": {
-    "default_popup": "popup.html",
-    "default_icon": {
-      "16": "img/icon16.png",
-      "32": "img/icon32.png",
-      "48": "img/icon48.png"
-    }
+    "default_popup": "popup.html"
   },
+  "web_accessible_resources": ["popup.html"],
   "manifest_version": 2,
   "background": {
     "scripts": ["background.js"]
