@@ -1,5 +1,5 @@
 let GPT_URL = "https://api.openai.com/v1/chat/completions";
-let GPT_AUTHORIZATION_TOKEN = "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";
+let GPT_AUTHORIZATION_TOKEN = "";
 
 /**
  * interacts with chat gpt
