@@ -1,18 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="style.css" />
-    <script src="popup.js"></script>
-</head>
-<body>
-<button id="Button">Click Me!</button>
-<button id="helpButton">?</button>
-<span id="helpDiv" hidden>
-    <p>To summarize an article, simply right click anywhere on the page and click "Summarize"!</p>
-</span>
-<h1>The Abstract-O-Matic, Bitch</h1>
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link rel="stylesheet" href="style.css" />
+        <script src="popup.js"></script>
+    </head>
+    <body>
+        <h1>The Abstract-O-Matic</h1>
+        <span id="helpDiv">
+            <p>To summarize an article, simply right click<br> anywhere on the page and click "Summarize"!</p>
+        </span>
+        <div id="userPreferencesDiv">
+            <div>
+                <label for="gptKey">Enter GPT Key:</label>
+                <input id="gptKey" name="gptKey" type="text">
+            </div>
+            <span>
+                <label for="responseLengthPreference">Response Length (40-600):</label>
+                <input id="responseLengthPreference" name="responseLengthPreference"
+                       type="range" min="40" max="600" value = "400" step="20">
+                <span id="responseLengthPreferenceDisplay">400</span>
+            </span>
+        </div>
+    </body>
 </html>
