@@ -14,11 +14,7 @@ browser.contextMenus.create({
 );
 
 browser.contextMenus.onClicked.addListener((info, tab) => {
-    switch (info.menuItemId) {
-        case "summarize":
-            console.log("summarize selected");
-            break;
-    }
+    console.log("summarize selected");
 });
 
 

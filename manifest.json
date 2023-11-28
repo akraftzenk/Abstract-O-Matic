@@ -11,6 +11,7 @@
       "48": "img/icon48.png"
     }
   },
+  "web_accessible_resources": ["popup.html"],
   "manifest_version": 2,
   "background": {
     "scripts": ["background.js"]
