@@ -27,7 +27,8 @@ async function gpt_interaction(request) {
 /**
  * creates the prompt
  * @param article_text the text of the article
+ * @param num_sentences the number of sentences to return
  */
-function create_prompt(article_text){
-
+function create_prompt(article_text, num_sentences){
+    return `summarize "${article_text}" in ${num_sentences} sentences`;
 }
