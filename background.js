@@ -12,7 +12,6 @@ chrome.contextMenus.create({
     },
     onCreated,
 );
-
 chrome.contextMenus.onClicked.addListener((info, tab) => {
     switch (info.menuItemId) {
         case "summarize":
