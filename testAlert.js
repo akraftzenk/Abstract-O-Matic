@@ -3,15 +3,6 @@
     let oldContentClass = "oldcontent-abstract";
     let sidebarClass = "sidebar-abstract";
 
-    /*
-        Shoutouts to this stackoverflow page?
-        https://stackoverflow.com/questions/9284117/inserting-arbitrary-html-into-a-documentfragment
-     */
-//function fragmentFromString(strHTML) {
-    //  return document.createRange().createContextualFragment(strHTML);
-//}
-
-
 
     /*
 console.log(document.body);
@@ -34,42 +25,60 @@ console.log(document.body);
     //I think this line is somehow making the webpage blank.
      */
 
-    /*
-    https://youtu.be/k238XpMMn38?si=bXYrCtmF1iU6a3s8&t=68
-    The video says it better than I ever could.
 
-     */
     let sidebar = document.createElement("div");
     sidebar.classList.add(sidebarClass);
-    const new_body = document.createElement("body");
+    const new_body = document.createElement("body");//no, this can't be a div or else it breaks everything.
+    document.body.classList.add(oldContentClass);
     new_body.appendChild(sidebar);
     new_body.appendChild(document.body);
-    document.body.innerHTML = new_body.innerHTML; //?????
-    document.body.classList.add(oldContentClass);
+    document.body = new_body; //?!?!?!?! ignore this error its janky but it works.
 
-    //my hope is that my code is so awful that I am never allowed to write UI code again.
 
     let pain = document.createElement('img');
-    pain.src = "https://i.imgur.com/CVYjZlsg.jpg";
+    pain.src = "https://media.npr.org/assets/img/2021/08/11/gettyimages-1279899488_wide-f3860ceb0ef19643c335cb34df3fa1de166e2761-s1100-c50.jpg";
     sidebar.appendChild(pain);
-    //I'm going to commit a war crime so awful it will make Israeli's forces
-    //seem like a fucking world peace organization.
 
+
+    let crying = document.getElementsByTagName('body')
+    console.log(crying);
     // This code just adds the stylesheet to the page.
     let head = document.getElementsByTagName('HEAD')[0];
 
     // Create new link Element.
-    let link = document.createElement('link');
+    //let link = document.createElement('link');
 
 // set the attributes for link element
-    link.rel = 'stylesheet';
+//     link.rel = 'stylesheet';
+//
+//     link.type = 'text/css';
+//
+//     link.href = 'styleForSidebar.css';
+//idk how to import a stylesheet so this is a temporary thing until i figure it out.
+    let style = document.createElement('style');
+    style.innerHTML = `
+    .sidebar-abstract {
+    height: 100%;
+    width: 45%;
+    position: fixed;
+    top: 0;
+    right: 0;
+    background-color: #333;
+    padding-top: 20px;
+}
 
-    link.type = 'text/css';
+.oldcontent-abstract {
 
-    link.href = 'styleForSidebar.css';
+    padding: 20px;
+    display: grid;
+}
 
+body{
+    background-color: green;
+}
+    `
 // Append link element to HTML head
-    head.appendChild(link);
+    head.appendChild(style);
 
 //say a prayer that this doesn't break the webpage
     console.log("bye");

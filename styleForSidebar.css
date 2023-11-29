@@ -1,3 +1,8 @@
+/*
+I don't know how to import a stylesheet through an web extension, so I put the contents of this in innerHTML.
+CHANGING THIS FILE WILL NOT CHANGE THE STYLESHEET.
+CHANGE IT IN testAlert.js IF YOU WANT TO CHANGE THE STYLESHEET.
+*/
 .sidebar-abstract {
     height: 100%;
     width: 250px;
@@ -9,6 +14,11 @@
 }
 
 .oldcontent-abstract {
-    margin-right: 250px;
+
     padding: 20px;
+    display: grid;
+}
+
+body{
+    background-color: green;
 }
