@@ -35,9 +35,15 @@ console.log(document.body);
     document.body = new_body; //?!?!?!?! ignore this error its janky but it works.
 
 
-    let pain = document.createElement('img');
-    pain.src = "https://media.npr.org/assets/img/2021/08/11/gettyimages-1279899488_wide-f3860ceb0ef19643c335cb34df3fa1de166e2761-s1100-c50.jpg";
-    sidebar.appendChild(pain);
+    //let pain = document.createElement('img');
+    //pain.src = "https://media.npr.org/assets/img/2021/08/11/gettyimages-1279899488_wide-f3860ceb0ef19643c335cb34df3fa1de166e2761-s1100-c50.jpg";
+    //sidebar.appendChild(pain);
+
+    let summaryArea = document.createElement('textarea');
+    summaryArea.innerText = "This is where the output of ChatGPT Will Go.";
+    summaryArea.readOnly = true;
+    summaryArea.classList.add("summaryArea-Abstract");
+    sidebar.appendChild(summaryArea);
 
 
     let crying = document.getElementsByTagName('body')
@@ -67,15 +73,21 @@ console.log(document.body);
     padding-top: 20px;
 }
 
+.summaryArea-Abstract {
+    width: 100%;
+    resize: none;
+    height: 50%;
+}
+
 .oldcontent-abstract {
 
     padding: 20px;
     display: grid;
 }
 
-body{
-    background-color: green;
-}
+
+
+
     `
 // Append link element to HTML head
     head.appendChild(style);
