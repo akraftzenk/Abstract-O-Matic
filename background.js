@@ -1,3 +1,5 @@
+//curse you chrome for making us have to type chrome instead of browser
+
 function onCreated() {
     if (chrome.runtime.lastError) {
         console.log(`Error: ${chrome.runtime.lastError}`);
