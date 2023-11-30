@@ -36,13 +36,13 @@
 //idk how to import a stylesheet so this is a temporary thing until i figure it out.
     let style = document.createElement('style');
     style.innerHTML = `
-    .sidebar-abstract {
+.sidebar-abstract {
     height: 100%;
     width: 40%;
     position: fixed;
     top: 0;
     right: 0;
-    background-color: #333;
+    background-color: #FFFFFF;
     padding-top: 20px;
 }
 

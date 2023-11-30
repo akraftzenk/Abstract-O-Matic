@@ -20,7 +20,7 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
         case "summarize":
             chrome.tabs.executeScript({
                 //code: `alert("summarize selected");`,
-                file: `testAlert.js`,
+                file: `sidebarCreation.js`,
             });
             break;
     }
