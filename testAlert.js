@@ -38,7 +38,7 @@
     style.innerHTML = `
     .sidebar-abstract {
     height: 100%;
-    width: 45%;
+    width: 40%;
     position: fixed;
     top: 0;
     right: 0;
@@ -53,7 +53,7 @@
 }
 
 .oldcontent-abstract {
-
+    width: 55%;
     padding: 20px;
     display: grid;
 }
