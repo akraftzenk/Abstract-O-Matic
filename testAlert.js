@@ -4,40 +4,15 @@
     let sidebarClass = "sidebar-abstract";
 
 
-    /*
-console.log(document.body);
-    let bodyContent = document.getElementsByTagName("body");
-    //ugh what is this document fragment things supposed to do and am I using it right?
-    let temporaryDoc = document.body.createDocumentFragment();
-    //cross our fingers that there is only one body object in the webpage.
-    temporaryDoc.appendChild(bodyContent[0].children);
-    console.log(bodyContent); //what do you mean no body tags exist?!
-    //prepare to throw up
-    //document.body.innerHTML = "";
-
-    let bodyChildren = bodyContent.children;
-    //bodyChildren.forEach((element) => {element.pop()})
-    let oldContent = document.createElement("div");
-    oldContent.classList.add(oldContentClass);
-
-    oldContent.appendChild(temporaryDoc);
-    //How do I take all the dom elements of the body and put it into a div. is it that hard?!?!?!
-    //I think this line is somehow making the webpage blank.
-     */
-
-
     let sidebar = document.createElement("div");
     sidebar.classList.add(sidebarClass);
-    const new_body = document.createElement("body");//no, this can't be a div or else it breaks everything.
-    document.body.classList.add(oldContentClass);
-    new_body.appendChild(sidebar);
-    new_body.appendChild(document.body);
-    document.body = new_body; //?!?!?!?! ignore this error its janky but it works.
+    let original_body = document.createElement("div");
+    original_body.classList.add(oldContentClass);
+    original_body.innerHTML = document.body.innerHTML;
+    document.body.innerHTML = "";
+    document.body.appendChild(sidebar);
+    document.body.appendChild(original_body);
 
-
-    //let pain = document.createElement('img');
-    //pain.src = "https://media.npr.org/assets/img/2021/08/11/gettyimages-1279899488_wide-f3860ceb0ef19643c335cb34df3fa1de166e2761-s1100-c50.jpg";
-    //sidebar.appendChild(pain);
 
     let summaryArea = document.createElement('textarea');
     summaryArea.innerText = "This is where the output of ChatGPT Will Go.";
@@ -46,8 +21,6 @@ console.log(document.body);
     sidebar.appendChild(summaryArea);
 
 
-    let crying = document.getElementsByTagName('body')
-    console.log(crying);
     // This code just adds the stylesheet to the page.
     let head = document.getElementsByTagName('HEAD')[0];
 
