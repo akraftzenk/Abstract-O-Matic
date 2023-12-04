@@ -162,7 +162,9 @@ async function handleSummarize() {
                 }, function (response) {
                     if(document.getElementById("extensionSidebar") !== null) {
                         console.log(response);
-                        document.getElementById("extensionSummaryArea").innerText = response;
+                        const summaryArea = document.getElementById("extensionSummaryArea");
+                        summaryArea.innerText = response;
+                        summaryArea.hidden = false;
                     }
                 });
             }
