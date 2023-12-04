@@ -1,15 +1,12 @@
 window.onload = () => {
     const gptKeyInput = document.getElementById("gptKey");
 
-    gptKeyInput.onkeydown = (event) => {
-        if (event.key === "Enter") {
-            gptKeyInput.blur();
-            const gptKeyValue = gptKeyInput.value;
-            chrome.storage.local.set({ 'GPT_KEY': gptKeyValue }, function() {
-                console.log('String saved:', inputText);
-                window.close(); // Close the popup after saving
-            });
-        }
+    gptKeyInput.onchange = (event) => {
+        const gptKeyValue = gptKeyInput.value;
+        chrome.storage.local.set({ 'GPT_KEY': gptKeyValue }, function() {
+            console.log('String saved:', inputText);
+            window.close(); // Close the popup after saving
+        });
     }
 }
 

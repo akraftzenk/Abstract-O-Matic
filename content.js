@@ -92,10 +92,6 @@ function createSummaryTextArea(sidebar){
 
     summaryAreaDiv.appendChild(summaryArea);
     sidebar.appendChild(summaryAreaDiv);
-
-
-
-
 }
 
 function createStyle(){
@@ -148,8 +144,6 @@ function createStyle(){
         resize: none;
         height: 100%;
     }
-    
-    
     `;
     document.head.appendChild(style);
 }
@@ -195,8 +189,77 @@ function closeSidebar(){
     document.body.innerHTML = document.getElementById("originalBody").innerHTML;
 }
 
-function getArticle(){
-    return document.getElementById("originalBody").innerText;
+function getArticle() {
+    let text;
+    text = getTextLayerClass();
+    if (text === undefined) {
+        text = getBodyMatterId();
+    }
+    if (text === undefined) {
+        text = getArticleTags();
+    }
+    if (text === undefined) {
+        text = getContentClass();
+    }
+    if (text === undefined) {
+        text = document.getElementById("originalBody").innerText;
+    }
+
+    return text;
+}
+
+// check for class textLayer (firefox pdf viewer and some other sites)
+function getTextLayerClass() {
+    let elements = document.getElementsByClassName("textLayer");
+    if (elements.length === 0) {
+        // no text layer :(
+        return undefined;
+    } else {
+        return getLongest(elements).innerText;
+    }
+}
+
+// get text from bodymatter id
+function getBodyMatterId() {
+    let bodyMatter = document.getElementById("bodymatter");
+    if (bodyMatter) {
+        return bodyMatter.innerText;
+    } else {
+        return undefined;
+    }
+}
+
+// get text from article tags
+function getArticleTags() {
+    let elements = document.getElementsByTagName("article");
+    if (elements.length === 0) {
+        return undefined;
+    } else {
+        return getLongest(elements).innerText;
+    }
+}
+
+// get text from content class / content id
+function getContentClass() {
+    let elements = document.getElementsByClassName("content");
+    if (elements.length === 0) {
+        return undefined;
+    } else {
+        return getLongest(elements).innerText;
+    }
+}
+
+// helper for getting article text
+function getLongest(elements) {
+    let longestElement = undefined;
+
+    for (let element of elements) {
+        if (longestElement === undefined || element.innerText.length > longestElement.innerText.length) {
+            longestElement = element;
+        }
+    }
+
+    return longestElement;
 }
 
 // GPT Stuff
