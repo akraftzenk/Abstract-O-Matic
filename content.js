@@ -81,9 +81,21 @@ function createSummaryTextArea(sidebar){
     summaryArea.id = "extensionSummaryArea";
     summaryArea.hidden = true;
 
+    let loadingImage = document.createElement('img');
+    loadingImage.src = "https://media2.giphy.com/media/3oEjI6SIIHBdRxXI40/200w.gif?cid=6c09b9522ajy0t8kkn7nj6o8kqb7m5xgwg9fchda667tra6m&ep=v1_gifs_search&rid=200w.gif&ct=g";
+    loadingImage.hidden = true;
+    loadingImage.id = "abstractloading";
+
     const summaryAreaDiv = document.createElement("div");
+
+    sidebar.appendChild(loadingImage);
+
     summaryAreaDiv.appendChild(summaryArea);
     sidebar.appendChild(summaryAreaDiv);
+
+
+
+
 }
 
 function createStyle(){
@@ -136,6 +148,8 @@ function createStyle(){
         resize: none;
         height: 100%;
     }
+    
+    
     `;
     document.head.appendChild(style);
 }
@@ -155,14 +169,21 @@ async function handleSummarize() {
                 const prompt = create_prompt(articleText, numSentences);
                 console.log(prompt);
 
+
+                let loadingBar = document.getElementById("abstractloading");
+                loadingBar.hidden = false;
                 chrome.runtime.sendMessage({
                     action: 'gpt-request',
                     prompt: prompt,
                     gpt_key: GPT_KEY
                 }, function (response) {
                     if(document.getElementById("extensionSidebar") !== null) {
+                        let loadingBar = document.getElementById("abstractloading");
+                        loadingBar.hidden = true;
                         console.log(response);
-                        document.getElementById("extensionSummaryArea").innerText = response;
+                       const summaryArea = document.getElementById("extensionSummaryArea");
+                       summaryArea.innerText = response;
+                       summaryArea.hidden = false;
                     }
                 });
             }
