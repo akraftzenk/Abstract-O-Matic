@@ -17,8 +17,9 @@ chrome.runtime.onMessage.addListener(async function (request, sender, sendRespon
     if (request.action === 'gpt-request') {
         const summary = await gpt_interaction(request.prompt, request.gpt_key);
         // Send the result back to the content script
-        sendResponse({summary});
-        return true; // Keep the message channel open for sendResponse
+        console.log(summary);
+        sendResponse({response: summary});
+        return summary;
     }
 });
 

@@ -7,9 +7,9 @@ chrome.runtime.onMessage.addListener(async function (request, sender, sendRespon
 
 // Function to add a button to the webpage
 async function createSidebar() {
-    // if(document.getElementById("extensionSidebar") !== null){
-    //     document.getElementById("extensionSidebar").innerHTML = "";
-    // } else {
+    if(document.getElementById("extensionSidebar") !== null){
+        document.getElementById("extensionSidebar").innerHTML = "";
+    } else {
         let sidebar = document.createElement("div");
         sidebar.id = "extensionSidebar";
         let original_body = document.createElement("div");
@@ -18,17 +18,16 @@ async function createSidebar() {
         document.body.innerHTML = "";
         document.body.appendChild(sidebar);
         document.body.appendChild(original_body);
-    // }
-
+    }
+    let sidebar = document.getElementById("extensionSidebar");
     await createNumSentencesInput(sidebar);
     createSummarizeButton(sidebar);
+    createCloseButton(sidebar);
     createSummaryTextArea(sidebar);
     createStyle();
 }
 
 async function createNumSentencesInput(sidebar) {
-    console.log("hello?");
-
     const numSentencesInputDiv = document.createElement("div");
     numSentencesInputDiv.id = "numSentencesInputDiv";
 
@@ -50,13 +49,26 @@ function createSummarizeButton(sidebar){
     button.id = "summarizeButton";
 
     button.addEventListener("click", async function () {
-        // Send a message to the system
         await handleSummarize();
     });
 
     const buttonDiv = document.createElement("div");
+    buttonDiv.id = "extensionButtonDiv";
     buttonDiv.appendChild(button);
     sidebar.appendChild(buttonDiv);
+}
+
+function createCloseButton(sidebar){
+    const closeButton = document.createElement("button");
+    closeButton.textContent = "Close";
+    closeButton.id = "extensionCloseButton";
+
+    closeButton.addEventListener("click", async function () {
+        closeSidebar();
+    });
+
+    const buttonDiv = document.getElementById("extensionButtonDiv");
+    buttonDiv.appendChild(closeButton);
 }
 
 function createSummaryTextArea(sidebar){
@@ -87,6 +99,7 @@ function createStyle(){
         right: 0;
         background-color: #FFFFFF;
         border-style: solid;
+        padding: 10px;
     }
     
     #extensionSidebar div {
@@ -100,6 +113,7 @@ function createStyle(){
     
     #numSentencesExtensionInput {
         all: initial;
+        border: 1px solid;
     }
     
     #summarizeButton {
@@ -110,33 +124,48 @@ function createStyle(){
         border: none;
         border-radius: 4px;
         cursor: pointer;
+        margin-right: 10px;
     }
     
     #extensionSummaryArea {
         all: initial;
         width: 100%;
         resize: none;
-        height: 50%;
+        height: 100%;
     }
     `;
     document.head.appendChild(style);
 }
 
 async function handleSummarize() {
-    const numSentences = parseInt(document.getElementById("numSentencesExtensionInput").value);
-    chrome.storage.local.set({ 'Summary_Length': numSentences });
-    chrome.storage.local.get('GPT_KEY', async function (data) {
-        const GPT_KEY = data.GPT_KEY;
-        console.log('Retrieved string from storage:', GPT_KEY);
-        const articleText = getArticle();
-        const prompt = create_prompt(articleText, numSentences);
-        console.log(prompt);
-        // const summaryText = gpt_interaction(prompt, GPT_KEY);
-        // console.log(summaryText);
-        chrome.runtime.sendMessage({ action: 'gpt-request', prompt: prompt, gpt_key: GPT_KEY}, function(response) {
-            console.log(response);
+    if(document.getElementById("extensionSidebar") !== null) {
+        const numSentences = parseInt(document.getElementById("numSentencesExtensionInput").value);
+        chrome.storage.local.set({'Summary_Length': numSentences});
+        chrome.storage.local.get('GPT_KEY', async function (data) {
+            if(document.getElementById("extensionSidebar") !== null) {
+                const GPT_KEY = data.GPT_KEY;
+                console.log('Retrieved string from storage:', GPT_KEY);
+                const articleText = getArticle();
+                const prompt = create_prompt(articleText, numSentences);
+                console.log(prompt);
+
+                chrome.runtime.sendMessage({
+                    action: 'gpt-request',
+                    prompt: prompt,
+                    gpt_key: GPT_KEY
+                }, function (response) {
+                    if(document.getElementById("extensionSidebar") !== null) {
+                        console.log(response);
+                        document.getElementById("extensionSummaryArea").innerText = response;
+                    }
+                });
+            }
         });
-    });
+    }
+}
+
+function closeSidebar(){
+    document.body.innerHTML = document.getElementById("originalBody").innerHTML;
 }
 
 function getArticle(){
@@ -151,5 +180,9 @@ function getArticle(){
  * @param num_sentences the number of sentences to return
  */
 function create_prompt(article_text, num_sentences){
-    return `Please summarize "${article_text}" in ${num_sentences} sentences`;
+    let split_article = article_text.split(/[\s!"#$%&'()*+,-./:;<=>?@[\\\]^_`{|}~]/);
+    let filtered = split_article.filter(token => token.length > 0);
+    let max_length = filtered.slice(0, 2000).join(" ").length + split_article.length - filtered.length;
+    let truncated_article_text = article_text.slice(0, max_length);
+    return `In ${num_sentences} sentences, please summarize "${truncated_article_text}"`;
 }
