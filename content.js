@@ -32,7 +32,10 @@ async function createNumSentencesInput(sidebar) {
     numSentencesInputDiv.id = "numSentencesInputDiv";
 
     const data = await chrome.storage.local.get('Summary_Length');
-    const Summary_Length = data.Summary_Length;
+    let Summary_Length = data.Summary_Length;
+    if (isNaN(Summary_Length)) {
+        Summary_Length = 10;
+    }
 
     numSentencesInputDiv.innerHTML = `
             <label for="numSentencesExtensionInput" id="numSentencesExtensionLabel">Number of Sentences in the Summary:</label>
@@ -139,7 +142,10 @@ function createStyle(){
 
 async function handleSummarize() {
     if(document.getElementById("extensionSidebar") !== null) {
-        const numSentences = parseInt(document.getElementById("numSentencesExtensionInput").value);
+        let numSentences = parseInt(document.getElementById("numSentencesExtensionInput").value);
+        if(isNaN(numSentences)){
+            numSentences = 10;
+        }
         chrome.storage.local.set({'Summary_Length': numSentences});
         chrome.storage.local.get('GPT_KEY', async function (data) {
             if(document.getElementById("extensionSidebar") !== null) {

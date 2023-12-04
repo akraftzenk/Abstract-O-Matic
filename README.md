@@ -5,8 +5,10 @@ The Abstract-o-Matic is a browser extension that is meant to help simplify scien
 How to run the extension.
 
 ---
+It should run on webpages like wikipedia. We didn't get it to work on pdfs
+
+---
 ## Chrome:
-- (Chrome doesn't work for pdfs with our extension)
 - Type "chrome://extensions" into your browser
 - Enable developer mode in the top right corner
 - Click on Load unpacked in the top left
