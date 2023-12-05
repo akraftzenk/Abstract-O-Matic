@@ -5,7 +5,9 @@ chrome.contextMenus.create({
     contexts: ["all"]
 });
 
-// Handle click event on the context menu item
+/**
+ * listener for when the right click option is selected
+ */
 chrome.contextMenus.onClicked.addListener(function(info, tab) {
     if (info.menuItemId === "summarize") {
         // Send a message to content script
@@ -13,6 +15,9 @@ chrome.contextMenus.onClicked.addListener(function(info, tab) {
     }
 });
 
+/**
+ * handles a request to interact with chat gpt
+ */
 chrome.runtime.onMessage.addListener(async function (request, sender, sendResponse) {
     if (request.action === 'gpt-request') {
         const summary = await gpt_interaction(request.prompt, request.gpt_key);

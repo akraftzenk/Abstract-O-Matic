@@ -1,3 +1,6 @@
+/**
+ * listener to listen for when to create the sidebar
+ */
 chrome.runtime.onMessage.addListener(async function (request, sender, sendResponse) {
     if (request.message === "createSidebar") {
         // Add a button to the webpage
@@ -5,7 +8,10 @@ chrome.runtime.onMessage.addListener(async function (request, sender, sendRespon
     }
 });
 
-// Function to add a button to the webpage
+/**
+ * creates the sidebar
+ * @returns {Promise<void>}
+ */
 async function createSidebar() {
     if(document.getElementById("extensionSidebar") !== null){
         document.getElementById("extensionSidebar").innerHTML = "";
@@ -23,10 +29,17 @@ async function createSidebar() {
     await createNumSentencesInput(sidebar);
     createSummarizeButton(sidebar);
     createCloseButton(sidebar);
+    sidebar.appendChild(document.createElement("br"));
+    createLoadingCircle(sidebar);
     createSummaryTextArea(sidebar);
     createStyle();
 }
 
+/**
+ * creates the input field
+ * @param sidebar
+ * @returns {Promise<void>}
+ */
 async function createNumSentencesInput(sidebar) {
     const numSentencesInputDiv = document.createElement("div");
     numSentencesInputDiv.id = "numSentencesInputDiv";
@@ -46,6 +59,10 @@ async function createNumSentencesInput(sidebar) {
     sidebar.appendChild(numSentencesInputDiv);
 }
 
+/**
+ * creates the summarize button
+ * @param sidebar
+ */
 function createSummarizeButton(sidebar){
     const button = document.createElement("button");
     button.textContent = "Click me";
@@ -61,6 +78,10 @@ function createSummarizeButton(sidebar){
     sidebar.appendChild(buttonDiv);
 }
 
+/**
+ * creates a close button
+ * @param sidebar
+ */
 function createCloseButton(sidebar){
     const closeButton = document.createElement("button");
     closeButton.textContent = "Close";
@@ -74,6 +95,23 @@ function createCloseButton(sidebar){
     buttonDiv.appendChild(closeButton);
 }
 
+/**
+ * creates a loading circle to be shown while waiting for the response from chat gpt
+ * @param sidebar
+ */
+function createLoadingCircle(sidebar){
+    let loadingImage = document.createElement('img');
+    loadingImage.src = "https://media2.giphy.com/media/3oEjI6SIIHBdRxXI40/200w.gif?cid=6c09b9522ajy0t8kkn7nj6o8kqb7m5xgwg9fchda667tra6m&ep=v1_gifs_search&rid=200w.gif&ct=g";
+    loadingImage.hidden = true;
+    loadingImage.id = "abstractloading";
+
+    sidebar.appendChild(loadingImage);
+}
+
+/**
+ * adds the text area to the webpage
+ * @param sidebar
+ */
 function createSummaryTextArea(sidebar){
     let summaryArea = document.createElement('textarea');
     summaryArea.innerText = "";
@@ -81,19 +119,15 @@ function createSummaryTextArea(sidebar){
     summaryArea.id = "extensionSummaryArea";
     summaryArea.hidden = true;
 
-    let loadingImage = document.createElement('img');
-    loadingImage.src = "https://media2.giphy.com/media/3oEjI6SIIHBdRxXI40/200w.gif?cid=6c09b9522ajy0t8kkn7nj6o8kqb7m5xgwg9fchda667tra6m&ep=v1_gifs_search&rid=200w.gif&ct=g";
-    loadingImage.hidden = true;
-    loadingImage.id = "abstractloading";
-
     const summaryAreaDiv = document.createElement("div");
-
-    sidebar.appendChild(loadingImage);
 
     summaryAreaDiv.appendChild(summaryArea);
     sidebar.appendChild(summaryAreaDiv);
 }
 
+/**
+ * add a stylesheet to the webpage
+ */
 function createStyle(){
     const style = document.createElement("style");
     style.textContent = `
@@ -148,6 +182,10 @@ function createStyle(){
     document.head.appendChild(style);
 }
 
+/**
+ * handles a request for to summarize the article
+ * @returns {Promise<void>}
+ */
 async function handleSummarize() {
     if(document.getElementById("extensionSidebar") !== null) {
         let numSentences = parseInt(document.getElementById("numSentencesExtensionInput").value);
@@ -185,10 +223,17 @@ async function handleSummarize() {
     }
 }
 
+/**
+ * closes the sidebar
+ */
 function closeSidebar(){
     document.body.innerHTML = document.getElementById("originalBody").innerHTML;
 }
 
+/**
+ * gets the article text
+ * @returns {string} the text of the article
+ */
 function getArticle() {
     let text;
     text = getTextLayerClass();
@@ -270,9 +315,9 @@ function getLongest(elements) {
  * @param num_sentences the number of sentences to return
  */
 function create_prompt(article_text, num_sentences){
-    let split_article = article_text.split(/[\s!"#$%&'()*+,-./:;<=>?@[\\\]^_`{|}~]/);
-    let filtered = split_article.filter(token => token.length > 0);
-    let max_length = filtered.slice(0, 2000).join(" ").length + split_article.length - filtered.length;
-    let truncated_article_text = article_text.slice(0, max_length);
+    // let split_article = article_text.split(/[\s!"#$%&'()*+,-./:;<=>?@[\\\]^_`{|}~]/);
+    // let filtered = split_article.filter(token => token.length > 0);
+    // let max_length = filtered.slice(0, 2000).join(" ").length + split_article.length - filtered.length;
+    let truncated_article_text = article_text.slice(0, 10000);//max_length);
     return `In ${num_sentences} sentences, please summarize "${truncated_article_text}"`;
 }
