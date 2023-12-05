@@ -65,7 +65,7 @@ async function createNumSentencesInput(sidebar) {
  */
 function createSummarizeButton(sidebar){
     const button = document.createElement("button");
-    button.textContent = "Click me";
+    button.textContent = "Summarize";
     button.id = "summarizeButton";
 
     button.addEventListener("click", async function () {
